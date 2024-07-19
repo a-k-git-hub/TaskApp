@@ -92,7 +92,7 @@ function TaskHomePage() {
                 <div className="ModalDialogBox">
                     <div style={{ display: "flex", flexDirection: "column", background: 'rgb(149, 192, 206)' }}>
                         <h2 style={{ alignSelf: "center" }}>{addStepsModalOpen ? 'Add Steps' : 'Add Task'}</h2>
-                        <img src="https://cdn-icons-png.flaticon.com/128/2734/2734822.png" style={{ height: "30px", width: "30px", alignSelf: "flex-end", position: "absolute" }}
+                        <img src="https://cdn-icons-png.flaticon.com/128/2734/2734822.png" alt="Close" style={{ height: "30px", width: "30px", alignSelf: "flex-end", position: "absolute" }}
                             onClick={handleCloseModal} />
                     </div>
                     <input placeholder={addStepsModalOpen ? 'Add Steps Name' : 'Add Task Name'}
@@ -203,12 +203,12 @@ function TaskHomePage() {
                                         <div className="ArrowDeleteMainContainer">
                                             {index === 0 ? <div></div> :
                                                 <img className="ArrowDeleteImageStyle" src="https://cdn-icons-png.flaticon.com/128/507/507257.png"
-                                                    onClick={() => moveToPrevStep(index, taskIndex)} />}
+                                                    alt="next" onClick={() => moveToPrevStep(index, taskIndex)} />}
                                             <img className="ArrowDeleteImageStyle" src="https://cdn-icons-png.flaticon.com/128/6861/6861362.png"
-                                                onClick={() => deleteTask(index, taskIndex)} />
+                                                alt="Delete" onClick={() => deleteTask(index, taskIndex)} />
                                             {index === taskStepsList.length - 1 ? <div></div> :
                                                 <img className="ArrowDeleteImageStyle" src="https://cdn-icons-png.flaticon.com/128/271/271226.png"
-                                                    onClick={() => moveToNextStep(index, taskIndex)} />}
+                                                    alt="prev" onClick={() => moveToNextStep(index, taskIndex)} />}
                                         </div>
                                     </div>
                                 )
