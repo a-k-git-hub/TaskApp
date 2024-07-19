@@ -71,15 +71,13 @@ function TaskHomePage() {
 
     const handleAddTask = () => {
         if (taskStepsList.length) {
-            if (currentSelectedParentIndex !== null && taskOrStepName) {
-                const addTask = taskStepsList[0].tasks.push({ taskName: taskOrStepName })
-                setTaskOrStepName(addTask);
-                handleCloseModal();
-                setTaskOrStepName('');
-            }
-            else {
-                setErrorText(true)
-            }
+            const addTask = taskStepsList[0].tasks.push({ taskName: taskOrStepName })
+            setTaskOrStepName(addTask);
+            handleCloseModal();
+            setTaskOrStepName('');
+        }
+        else {
+            setErrorText(true)
         }
     }
 
@@ -125,6 +123,7 @@ function TaskHomePage() {
     }
 
     const handleDropSelection = (parentStep, taskIndex) => {
+        console.log("CurrentStep:", parentStep, 'current Task:', taskIndex)
         setCurrentSelectedParentIndex(parentStep);
         setCurrentSelectedTaskIndex(taskIndex);
         const copySelectedTask = taskStepsList[parentStep].tasks[taskIndex];
@@ -148,19 +147,17 @@ function TaskHomePage() {
     const steps = () => {
         return (
             taskStepsList?.map((step, index) => {
-                const filteredTasks = step.tasks.filter(task =>
-                    task.taskName.toLowerCase().includes(searchText.toLowerCase())
+                const filteredTasks = step?.tasks?.filter(task =>
+                    task?.taskName?.toLowerCase().includes(searchText.toLowerCase())
                 );
-
                 return (
                     <div className="StepsContainer" key={index}>
                         <h3>{step.stepName}</h3>
-                        {filteredTasks.map((task, taskIndex) => (
+                        {filteredTasks?.map((task, taskIndex) => (
                             <div className="StepsTaskMainContainer" key={taskIndex}>
                                 <h3 className="StepsTaskName">{task.taskName}</h3>
                                 <div style={{ display: "flex", justifyContent: "center" }}
-                                    onClick={() => handleDropSelection(index, taskIndex)}
-                                >
+                                    onClick={() => handleDropSelection(index, taskIndex)}>
                                     <div className="dropdown">
                                         <button className="dropbtn">Dropdown</button>
                                         <div className="dropdown-content">
