@@ -1,0 +1,147 @@
+.Container {
+    height: 100vh;
+    width: 100vw;
+    background: rgb(105, 99, 99);
+}
+
+.SearchBarStyle {
+    height: 50px;
+    width: 300px;
+    border-radius: 12px;
+    border-width: 2px;
+    border-color: black;
+}
+
+.AddTaskContainer {
+    height: 50px;
+    width: 100px;
+    border-radius: 12px;
+    border-width: 2px;
+    border-color: black;
+    transition: .2s;
+}
+
+.AddTaskContainer:hover {
+    background: #bdb8b8;
+    cursor: pointer;
+    height: 55px;
+    width: 105px;
+}
+
+.HeaderContainer {
+    height: 90px;
+    width: 100%;
+    background: rgb(149, 192, 206);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.ModalContainer {
+    position: absolute;
+    top: 0px;
+    height: 100vh;
+    width: 100vw;
+    background: rgb(1, 1, 1, .3);
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.ModalDialogBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 200px;
+    width: 350px;
+    background: white
+}
+
+.StepsListMainContainer {
+    display: flex;
+}
+
+.StepsContainer {
+    min-height: 50px;
+    width: 200px;
+    background-color: rgb(224, 208, 208);
+    margin-right: 10px;
+}
+
+.StepsTaskMainContainer {
+    height: 150px;
+    width: 100%;
+    background: #cec7c7;
+}
+
+.StepsTaskName {
+    color: rgb(68, 68, 187);
+    background-color: rgb(163, 163, 250);
+    text-align: center;
+}
+
+.ArrowDeleteMainContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ArrowDeleteImageStyle {
+    height: 25px;
+    width: 25px;
+    border-radius: 100px;
+}
+
+.ArrowDeleteImageStyle:hover {
+    cursor: pointer;
+    background: #bdb8b8;
+}
+
+.dropbtn {
+    background-color: #6a4fb6;
+    color: white;
+    /* padding: 16px; */
+    height: 30px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    align-self: center;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    background: red;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content p {
+    color: black;
+    /* padding: 12px 16px; */
+    text-align: center;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content p:hover {
+    background-color: #a59898;
+    cursor: pointer;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
