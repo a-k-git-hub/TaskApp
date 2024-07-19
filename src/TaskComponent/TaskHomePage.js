@@ -7,7 +7,7 @@ function TaskHomePage() {
     const [addStepsModalOpen, setAddStepsModalOpen] = useState(false);
     const [addTaskModalOpen, setAddTaskModalOpen] = useState(false);
     const [taskOrStepName, setTaskOrStepName] = useState('');
-    const [storeTask, setStoreTask] = useState({});
+    const [storeTask, setStoreTask] = useState(null);
     const [currentSelectedParentIndex, setCurrentSelectedParentIndex] = useState();
     const [currentSelectedTaskIndex, setCurrentSelectedTaskIndex] = useState();
     const [searchText, setSearchText] = useState('');
@@ -76,13 +76,15 @@ function TaskHomePage() {
 
     const handleAddTask = () => {
         if (taskStepsList.length) {
-            const addTask = taskStepsList[0].tasks.push({ taskName: taskOrStepName })
-            setTaskOrStepName(addTask);
-            handleCloseModal();
-            setTaskOrStepName('');
-        }
-        else {
-            setErrorText(true)
+            if (currentSelectedParentIndex !== null && taskOrStepName) {
+                const addTask = taskStepsList[0].tasks.push({ taskName: taskOrStepName })
+                setTaskOrStepName(addTask);
+                handleCloseModal();
+                setTaskOrStepName('');
+            }
+            else {
+                setErrorText(true)
+            }
         }
     }
 
@@ -99,7 +101,7 @@ function TaskHomePage() {
                         style={{ height: "50px", width: "80%", alignSelf: "center" }}
                         onChange={handleOnChange} />
                     {errorText && <p style={{ color: "red" }}>No Steps Found</p>}
-                    <button style={{ height: "30px", width: "50%", alignSelf: "center", marginBottom: "10px" }}
+                    <button disabled={!taskOrStepName} style={{ height: "30px", width: "50%", alignSelf: "center", marginBottom: "10px" }}
                         onClick={addStepsModalOpen ? handleAddSteps : handleAddTask}
                     >Add</button>
                 </div>
@@ -136,90 +138,66 @@ function TaskHomePage() {
         setStoreTask(copySelectedTask);
     }
 
+
+
     const handledDropMenuSelection = (item, dropIndex) => {
-        // console.log("itemChild", item,dropIndex)
-        console.log('child index', taskStepsList[dropIndex])
-        const updatedTaskList = [...taskStepsList];
-        updatedTaskList[dropIndex].tasks.push(storeTask)
-        updatedTaskList[currentSelectedParentIndex].tasks.splice(currentSelectedTaskIndex, 1);
-        setTaskStepsList(updatedTaskList);
+        if (storeTask !== null && currentSelectedParentIndex !== null && currentSelectedTaskIndex !== null) {
+            const updatedTaskList = [...taskStepsList];
+            updatedTaskList[dropIndex].tasks.push(storeTask);
+            updatedTaskList[currentSelectedParentIndex].tasks.splice(currentSelectedTaskIndex, 1);
+            setTaskStepsList(updatedTaskList);
+            setStoreTask(null);
+            setCurrentSelectedParentIndex(null);
+            setCurrentSelectedTaskIndex(null);
+        }
     }
 
     console.log('storeTask', storeTask)
-
     const steps = () => {
-        const filteredSteps = taskStepsList.filter(step => {
-            return step.tasks.some(task => task.taskName.toLowerCase().includes(searchText.toLowerCase()));
-        });
+        return (
+            taskStepsList?.map((step, index) => {
+                const filteredTasks = step.tasks.filter(task =>
+                    task.taskName.toLowerCase().includes(searchText.toLowerCase())
+                );
 
-        if (filteredSteps.length > 0) {
-            return (
-                filteredSteps.map((item, index) => {
-                    return (
-                        <div className="StepsContainer">
-                            <h3>{item.stepName}</h3>
-                            {item.tasks.map((task, taskIndex) => {
-                                if (!task.taskName.toLowerCase().includes(searchText.toLowerCase())) {
-                                    return null;
-                                }
-                                return (
-                                    <div className="StepsTaskMainContainer" key={taskIndex}>
-                                        <h3 className="StepsTaskName">{task.taskName}</h3>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    )
-                })
-            )
-
-        }
-        else {
-            return (
-                taskStepsList?.map((item, index) => {
-                    return (
-                        <div className="StepsContainer">
-                            <h3>{item.stepName}</h3>
-                            {item?.tasks?.map((task, taskIndex) => {
-                                console.log("task", task)
-                                return (
-                                    <div className="StepsTaskMainContainer">
-                                        <h3 className="StepsTaskName">{task.taskName}</h3>
-                                        <div style={{ display: "flex", justifyContent: "center" }}
-                                            onClick={() => handleDropSelection(index, taskIndex)}
-                                        >
-                                            <div className="dropdown">
-                                                <button className="dropbtn">Dropdown</button>
-                                                <div className="dropdown-content">
-                                                    {taskStepsList.map((item, index) => {
-                                                        return (
-                                                            <p onClick={() => handledDropMenuSelection(item, index)}>{item.stepName}</p>
-                                                        )
-                                                    })}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="ArrowDeleteMainContainer">
-                                            {index === 0 ? <div></div> :
-                                                <img className="ArrowDeleteImageStyle" src="https://cdn-icons-png.flaticon.com/128/507/507257.png"
-                                                    alt="next" onClick={() => moveToPrevStep(index, taskIndex)} />}
-                                            <img className="ArrowDeleteImageStyle" src="https://cdn-icons-png.flaticon.com/128/6861/6861362.png"
-                                                alt="Delete" onClick={() => deleteTask(index, taskIndex)} />
-                                            {index === taskStepsList.length - 1 ? <div></div> :
-                                                <img className="ArrowDeleteImageStyle" src="https://cdn-icons-png.flaticon.com/128/271/271226.png"
-                                                    alt="prev" onClick={() => moveToNextStep(index, taskIndex)} />}
+                return (
+                    <div className="StepsContainer" key={index}>
+                        <h3>{step.stepName}</h3>
+                        {filteredTasks.map((task, taskIndex) => (
+                            <div className="StepsTaskMainContainer" key={taskIndex}>
+                                <h3 className="StepsTaskName">{task.taskName}</h3>
+                                <div style={{ display: "flex", justifyContent: "center" }}
+                                    onClick={() => handleDropSelection(index, taskIndex)}
+                                >
+                                    <div className="dropdown">
+                                        <button className="dropbtn">Dropdown</button>
+                                        <div className="dropdown-content">
+                                            {taskStepsList.map((item, dropIndex) => {
+                                                return (
+                                                    <p onClick={() => handledDropMenuSelection(item, dropIndex)}>{item.stepName}</p>
+                                                )
+                                            })}
                                         </div>
                                     </div>
-                                )
-                            })}
-                        </div>
-                    )
-                })
-            )
-        }
+                                </div>
+
+                                <div className="ArrowDeleteMainContainer">
+                                    {index === 0 ? <div></div> :
+                                        <img className="ArrowDeleteImageStyle" src="https://cdn-icons-png.flaticon.com/128/507/507257.png"
+                                            alt="next" onClick={() => moveToPrevStep(index, taskIndex)} />}
+                                    <img className="ArrowDeleteImageStyle" src="https://cdn-icons-png.flaticon.com/128/6861/6861362.png"
+                                        alt="Delete" onClick={() => deleteTask(index, taskIndex)} />
+                                    {index === taskStepsList.length - 1 ? <div></div> :
+                                        <img className="ArrowDeleteImageStyle" src="https://cdn-icons-png.flaticon.com/128/271/271226.png"
+                                            alt="prev" onClick={() => moveToNextStep(index, taskIndex)} />}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                );
+            })
+        );
     }
-
 
     return (
         <div className="Container">
@@ -231,7 +209,6 @@ function TaskHomePage() {
                 {addStepsModalOpen && addModal()}
             </div>
             <div className="StepsListMainContainer">
-                {/* {taskStepsList.length && steps()} */}
                 {steps()}
             </div>
         </div>

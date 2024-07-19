@@ -1,7 +1,7 @@
 .Container {
     height: 100vh;
     width: 100vw;
-    background: rgb(105, 99, 99);
+    background: rgb(250, 250, 250);
 }
 
 .SearchBarStyle {
@@ -31,7 +31,7 @@
 .HeaderContainer {
     height: 90px;
     width: 100%;
-    background: rgb(149, 192, 206);
+    background: rgb(212, 229, 235);
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -64,14 +64,16 @@
 .StepsContainer {
     min-height: 50px;
     width: 200px;
-    background-color: rgb(224, 208, 208);
+    background-color: rgba(245, 229, 229, 0.616);
     margin-right: 10px;
+    border-radius: 12px;
 }
 
 .StepsTaskMainContainer {
     height: 150px;
     width: 100%;
     background: #cec7c7;
+    border-radius: 12px;
 }
 
 .StepsTaskName {
