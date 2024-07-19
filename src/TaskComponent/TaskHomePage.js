@@ -14,7 +14,6 @@ function TaskHomePage() {
     const [errorText, setErrorText] = useState(false)
 
     const handleSearch = (e) => {
-        console.log("Eventsearch:", e.target.value);
         setSearchText(e.target.value)
     }
 
@@ -48,7 +47,6 @@ function TaskHomePage() {
     }
 
     const handleAddTaskModal = () => {
-        console.log("taskStepsList.length", taskStepsList.length)
         setAddTaskModalOpen(prev => !prev)
     }
 
@@ -68,9 +66,6 @@ function TaskHomePage() {
             setTaskStepsList(stepsList);
             handleCloseModal();
             setTaskOrStepName('');
-        }
-        else {
-            console.log("Empty:Name:", taskOrStepName)
         }
     }
 
@@ -130,8 +125,6 @@ function TaskHomePage() {
     }
 
     const handleDropSelection = (parentStep, taskIndex) => {
-        console.log("parentStep, taskIndex", parentStep, taskIndex);
-        console.log("parent", taskStepsList[parentStep], "task:", taskStepsList[parentStep].tasks[taskIndex]);
         setCurrentSelectedParentIndex(parentStep);
         setCurrentSelectedTaskIndex(taskIndex);
         const copySelectedTask = taskStepsList[parentStep].tasks[taskIndex];
@@ -152,7 +145,6 @@ function TaskHomePage() {
         }
     }
 
-    console.log('storeTask', storeTask)
     const steps = () => {
         return (
             taskStepsList?.map((step, index) => {
