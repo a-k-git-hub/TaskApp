@@ -71,7 +71,6 @@ function TaskHomePage() {
         }
         else {
             console.log("Empty:Name:", taskOrStepName)
-            setEmptyStepOrTaskName(true)
         }
     }
 
