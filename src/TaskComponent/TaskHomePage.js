@@ -12,7 +12,6 @@ function TaskHomePage() {
     const [currentSelectedTaskIndex, setCurrentSelectedTaskIndex] = useState();
     const [searchText, setSearchText] = useState('');
     const [errorText, setErrorText] = useState(false)
-    const [emptyStepOrTaskName, setEmptyStepOrTaskName] = useState(false)
 
     const handleSearch = (e) => {
         console.log("Eventsearch:", e.target.value);
@@ -23,7 +22,7 @@ function TaskHomePage() {
         return (
             <input className="SearchBarStyle"
                 placeholder="Search..."
-                value={searchText} // Bind value to the state
+                value={searchText}
                 onChange={handleSearch} />
         )
     }
